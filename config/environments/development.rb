@@ -17,6 +17,11 @@ Rails.application.configure do
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
     config.action_controller.perform_caching = true
 
+    config.assets.compile = true
+    config.assets.debug = false
+    config.assets.cache_store = :null_store  # Disables the Asset cache
+    config.sass.cache = false  # Disable the SASS compiler cache
+
     config.cache_store = :memory_store
     config.public_file_server.headers = {
       'Cache-Control' => "public, max-age=#{2.days.to_i}"
