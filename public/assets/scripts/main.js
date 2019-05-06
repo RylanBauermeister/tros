@@ -1,10 +1,19 @@
+function randomArray(size){
+  let results = []
+  for(let i = 0; i < size; i++){
+    results.push(Math.floor(Math.random() * size) + 1)
+  }
+  return results;
+}
+
 function main(){
   let graphContainer1 = document.getElementById('graph1')
   let graphContainer2 = document.getElementById('graph2')
   let graphOneSort = document.getElementById('sort-type-1')
   let graphTwoSort = document.getElementById('sort-type-2')
-  let graph1 = new Graph(graphContainer1, [1,2,3,3,4,5,5,6,7,8,9,10,11,12,13,14,15,16])
-  let graph2 = new Graph(graphContainer2, [1,2,3,3,4,5,5,6,7,8,9,10,11,12,13,14,15,16])
+  let data = randomArray(50)
+  let graph1 = new Graph(graphContainer1, data.slice(0))
+  let graph2 = new Graph(graphContainer2, data.slice(0))
 
   let sort1 = new Sort({
     graph: graph1,
