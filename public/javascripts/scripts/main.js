@@ -6,14 +6,29 @@ function randomArray(size){
   return results;
 }
 
+function updateTimings(access, swap, compare){
+  let accessSpan = document.getElementById('access')
+  let swapSpan = document.getElementById('swap')
+  let compareSpan = document.getElementById('compare')
+  console.log(accessSpan.textContent)
+  accessSpan.textContent = access
+  swapSpan.textContent = swap
+  compareSpan.textContent = compare
+
+}
+
 function main(){
   let graphContainer1 = document.getElementById('graph1')
   let graphContainer2 = document.getElementById('graph2')
+
   let graphOneSort = document.getElementById('sort-type-1')
   let graphTwoSort = document.getElementById('sort-type-2')
-  let data = randomArray(50)
+
+  let data = randomArray(20)
   let graph1 = new Graph(graphContainer1, data.slice(0))
   let graph2 = new Graph(graphContainer2, data.slice(0))
+
+  updateTimings(50,10,10)
 
   let sort1 = new Sort({
     graph: graph1,
@@ -28,16 +43,12 @@ function main(){
     compare: 10
   })
 
-
-  graph1.shuffle();
-  graph2.shuffle();
-
   let shuffleButton = document.getElementById('shuffleButton')
   let sortButton = document.getElementById('sortButton')
 
   shuffleButton.addEventListener('click', () => {
-    graph1.shuffle();
-    graph2.shuffle();
+    graph2.items = graph1.shuffle();
+    graph2.renderColumns();
   })
 
   sortButton.addEventListener('click', () => {

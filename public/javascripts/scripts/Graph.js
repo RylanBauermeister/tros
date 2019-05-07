@@ -29,6 +29,7 @@ class Graph {
         [this.items[i], this.items[j]] = [this.items[j], this.items[i]];
     }
     this.renderColumns();
+    return this.items.slice(0)
   }
 
   swap(i, j){

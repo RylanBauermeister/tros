@@ -1,6 +1,26 @@
+html {
+  background: linear-gradient(to right, magenta, teal);
+}
+
 body {
   --main-graph-color: teal;
   --graph-blink-color: goldenrod;
+}
+
+.main-banner{
+  content: "t.roS";
+  text-align: center;
+  animation: unscramble 3s linear normal;
+}
+
+.stats-banner {
+  text-align: center;
+  margin:0 10px;
+  display: inline-block;
+}
+
+.stats-holder {
+  text-align: center;
 }
 
 .graph {

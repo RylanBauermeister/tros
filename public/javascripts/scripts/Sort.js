@@ -60,6 +60,14 @@ class Sort{
     }
   }
 
+  async mergeSort(){
+
+  }
+
+  async quickSort(){
+    
+  }
+
   sleep(miliseconds){
     return new Promise(resolve => setTimeout(resolve, miliseconds));
   }
