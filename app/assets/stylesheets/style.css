@@ -2,16 +2,18 @@
 @import url('https://fonts.googleapis.com/css?family=Gugi|Montserrat');
 @import url('https://fonts.googleapis.com/css?family=Rubik');
 
-body {
+html {
   --site-font: 'Rubik', sans-serif;
+  --main-site-color: #37a5ff;
   --main-graph-color: #ffb237;
   --graph-blink-color: #ff4e37;
+  background-color: var(--main-site-color);
+  color: var(--main-graph-color);
 }
 
 html {
   /* background: linear-gradient(to right, magenta, teal); */
-  background-color: #37a5ff;
-  color: #ffb237;
+
 }
 
 .sort-dropdown{
@@ -114,6 +116,7 @@ div.side-menu {
 .open-bubble{
   text-align: center;
   line-height: 50px;
+  cursor: pointer;
   width: 50px;
   height: 50px;
   position: absolute;

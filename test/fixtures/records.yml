@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sort_type: MyString
+  accesses: 1
+  swaps: 1
+  compares: 1
+  total_ms: 1
+
+two:
+  sort_type: MyString
+  accesses: 1
+  swaps: 1
+  compares: 1
+  total_ms: 1
