@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <%= stylesheet_link_tag "styles/style.css", media: "all" %>
+    <%= stylesheet_link_tag "style.css", media: "all" %>
     <meta charset="utf-8">
     <title>t.roS</title>
   </head>
@@ -13,33 +13,79 @@
       <h2 class="stats-banner">Swap Time: <span id=swap></span>ms</h2>
     </div>
 
-    <form action="index.html" method="post">
-      <select id="sort-type-1">
+    <div id="side-menu" class="side-menu">
+      <div id="open-bubble" class="open-bubble">>></div>
+      <form id="weighting">
+        <div class="form-item">
+          <%=label_tag "Access"%>
+          <%=text_field_tag "Access", "50"%>
+        </div>
+        <div class="form-item">
+          <%=label_tag "Compare"%>
+          <%=text_field_tag "Compare", "10"%>
+        </div>
+        <div class="form-item">
+          <%=label_tag "Swap"%>
+          <%=text_field_tag "Swap", "10"%>
+        </div>
+        <div class="form-item">
+          <%= submit_tag "Update"%>
+        </div>
+      </form>
+    </div>
+
+    <div class="graph-container">
+      <div class="graph graph-left" id="graph1">
+
+      </div>
+      <select id="sort-type-1" class="sort-dropdown">
         <option value="insertion">Insertion Sort</option>
         <option value="selection">Selection Sort</option>
         <option value="bubble">Bubble Sort</option>
-      </select>
-      <select id="sort-type-2">
-        <option value="insertion">Insertion Sort</option>
-        <option value="selection">Selection Sort</option>
-        <option value="bubble">Bubble Sort</option>
-        <option value="quick">Quick Sort</option>
         <option value="merge">Merge Sort</option>
       </select>
-    </form>
-    <button type="button" id="shuffleButton">Shuffle</button>
-    <button type="button" id="sortButton">Sort</button>
-    <br>
-    <div class="graph graph-left" id="graph1">
 
+      <div class="data">
+        <ul class="stats">
+          <li class="accesses">Accesses: <span class="num-access"></span></li>
+          <li class="swaps">Swaps: <span class="num-swap"></span></li>
+          <li class="compares">Compares: <span class="num-compare"></span></li>
+        </ul>
+        <span class='timing-span'>Total Time: <span id="time-span-2"></span></span>
+      </div>
     </div>
-    <div class="graph" id="graph2">
 
+    <div class="graph-container">
+
+      <div class="graph graph-right" id="graph2">
+
+      </div>
+      <select id="sort-type-2" class="sort-dropdown">
+        <option value="insertion">Insertion Sort</option>
+        <option value="selection">Selection Sort</option>
+        <option value="bubble">Bubble Sort</option>
+        <option value="merge">Merge Sort</option>
+      </select>
+
+      <div class="data">
+        <ul class="stats">
+          <li class="accesses">Accesses: <span class="num-access"></span></li>
+          <li class="swaps">Swaps: <span class="num-swap"></span></li>
+          <li class="compares">Compares: <span class="num-compare"></span></li>
+        </ul>
+        <span class='timing-span'>Total Time: <span id="time-span-1"></span></span>
+      </div>
     </div>
+    <div class="controls">
+      <button type="button" id="shuffleButton">Shuffle</button>
+      <button type="button" id="sortButton">Sort</button>
+    </div>
+
+
   </body>
 
   <%= javascript_include_tag "application"%>
-  <%= javascript_include_tag "scripts/Graph.js"%>
-  <%= javascript_include_tag "scripts/Sort.js"%>
-  <%= javascript_include_tag "scripts/main.js"%>
+  <%= javascript_include_tag "Graph.js"%>
+  <%= javascript_include_tag "Sort.js"%>
+  <%= javascript_include_tag "main.js"%>
 </html>

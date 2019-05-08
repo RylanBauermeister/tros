@@ -60,6 +60,52 @@ class Graph {
 
   }
 
+  update(arr, start){
+    let size = arr.length
+    this.items.splice(start, size, ...arr)
+    this.renderColumns();
+    for(let i = start; i < start+size; i++){
+      this.container.childNodes[i].classList.add("changed")
+    }
+  }
+
+  getStatsContainer(){
+    return this.container.parentNode.querySelector('.data')
+  }
+
+  setAccesses(num){
+    let dataContainer = this.getStatsContainer()
+    let stats = dataContainer.querySelector('ul')
+    let accesses = stats.querySelector('span.num-access')
+    accesses.textContent = num
+  }
+
+  setSwaps(num){
+    let dataContainer = this.getStatsContainer()
+    let stats = dataContainer.querySelector('ul')
+    let swaps = stats.querySelector('span.num-swap')
+    swaps.textContent = num
+  }
+
+  setCompares(num){
+    let dataContainer = this.getStatsContainer()
+    let stats = dataContainer.querySelector('ul')
+    let compares = stats.querySelector('span.num-compare')
+    compares.textContent = num
+  }
+
+  resetStats(){
+    let dataContainer = this.getStatsContainer()
+    let stats = dataContainer.querySelector('ul')
+    let compares = stats.querySelector('span.num-compare')
+    let swaps = stats.querySelector('span.num-swap')
+    let accesses = stats.querySelector('span.num-access')
+
+    accesses.textContent = '0';
+    swaps.textContent = '0';
+    compares.textContent = '0';
+
+  }
 
   renderColumns(){
     this.calculateWidth();

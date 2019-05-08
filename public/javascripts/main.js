@@ -6,11 +6,10 @@ function randomArray(size){
   return results;
 }
 
-function updateTimings(access, swap, compare){
+function updateTimings(access, compare, swap){
   let accessSpan = document.getElementById('access')
   let swapSpan = document.getElementById('swap')
   let compareSpan = document.getElementById('compare')
-  console.log(accessSpan.textContent)
   accessSpan.textContent = access
   swapSpan.textContent = swap
   compareSpan.textContent = compare
@@ -24,9 +23,13 @@ function main(){
   let graphOneSort = document.getElementById('sort-type-1')
   let graphTwoSort = document.getElementById('sort-type-2')
 
-  let data = randomArray(20)
+  let data = randomArray(50)
   let graph1 = new Graph(graphContainer1, data.slice(0))
   let graph2 = new Graph(graphContainer2, data.slice(0))
+
+  let sideMenu = document.getElementById('side-menu')
+  let openBubble = document.getElementById('open-bubble');
+  let weightingForm = document.getElementById('weighting')
 
   updateTimings(50,10,10)
 
@@ -43,8 +46,40 @@ function main(){
     compare: 10
   })
 
+  sort1.resetCounts();
+  sort2.resetCounts();
+
   let shuffleButton = document.getElementById('shuffleButton')
   let sortButton = document.getElementById('sortButton')
+
+  openBubble.addEventListener('click', ev => {
+    if(sideMenu.classList.contains("open")){
+      sideMenu.classList.remove("open")
+      ev.target.textContent = ">>"
+    } else {
+      sideMenu.classList.add("open")
+      ev.target.textContent = "<<"
+    }
+  })
+
+  weighting.addEventListener('submit', ev => {
+    ev.preventDefault();
+    let access = parseInt(ev.target.elements['Access'].value)
+    let compare = parseInt(ev.target.elements['Compare'].value)
+    let swap = parseInt(ev.target.elements['Swap'].value)
+    updateTimings(access, compare, swap)
+    sort1.updateTimings(access, compare, swap)
+    sort2.updateTimings(access, compare, swap)
+  })
+
+  window.addEventListener('keydown', ev => {
+    if (ev.keyCode === 27){
+      if(sideMenu.classList.contains("open")){
+        sideMenu.classList.remove("open")
+        openBubble.textContent = ">>"
+      }
+    }
+  })
 
   shuffleButton.addEventListener('click', () => {
     graph2.items = graph1.shuffle();
@@ -52,6 +87,8 @@ function main(){
   })
 
   sortButton.addEventListener('click', () => {
+    sort1.resetCounts();
+    sort2.resetCounts();
     sort1[graphOneSort.value + "Sort"]();
     sort2[graphTwoSort.value + "Sort"]();
   })

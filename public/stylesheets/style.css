@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css?family=Cinzel|Quattrocento+Sans');
+@import url('https://fonts.googleapis.com/css?family=Gugi|Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Rubik');
+
+body {
+  --site-font: 'Rubik', sans-serif;
+  --main-graph-color: #ffb237;
+  --graph-blink-color: #ff4e37;
+}
+
+html {
+  /* background: linear-gradient(to right, magenta, teal); */
+  background-color: #37a5ff;
+  color: #ffb237;
+}
+
+.sort-dropdown{
+  text-align: center;
+  width: 25%;
+  display:block;
+  margin: 10px auto;
+}
+
+.controls {
+  text-align: center;
+}
+button {
+  width: 24%;
+  font-family: var(--site-font);
+  font-size: 2.5em;
+  margin: 10px 5%;
+  border-radius: 20px;
+}
+
+.main-banner{
+  font-family: var(--site-font);
+  content: "t.roS";
+  text-align: center;
+  animation: unscramble 3s linear normal;
+}
+
+.stats-banner {
+  font-family: var(--site-font);
+  text-align: center;
+  margin:0 10px;
+  display: inline-block;
+}
+
+.stats-holder {
+  text-align: center;
+}
+
+.graph {
+  width: 45vw;
+  height: 50vh;
+  display: inline-block;
+  /* border: 1px solid black; */
+}
+
+.graph-left {
+  margin-right: 5vw;
+}
+
+.graph-container {
+  text-align: center;
+  display: inline-block;
+  width: 49%;
+}
+
+.data {
+  text-align: left;
+}
+
+.timing-span {
+  font-size: 2em;
+  margin-left: 25px;
+}
+
+.column {
+  position: relative;
+  bottom: 0px;
+  display: inline-block;
+  border: 1px solid black;
+  background-color: var(--main-graph-color);
+}
+
+.changed{
+  background-color: var(--graph-blink-color);
+
+  animation: flash 1s forwards linear normal;
+}
+
+@keyframes flash {
+  0% {
+    background:var(--graph-blink-color);
+  }
+  100% {
+    background:var(--main-graph-color);
+  }
+}
+
+/************** SIDEBAR STYLES ****************/
+div.side-menu {
+  height: 100%;
+  width: 20vw;
+  left: -21vw;
+  position: fixed;
+  background-color: white;
+  border: 2px solid black;
+  z-index: 9;
+  transition: .5s ease-out;
+}
+
+.open-bubble{
+  text-align: center;
+  line-height: 50px;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: calc(100% + 2px);
+  border-radius: 0 100px 100px 0;
+  background-color: var(--graph-blink-color)
+}
+
+.form-item {
+  margin-left: 8px;
+}
+
+div.open {
+  left: 0;
+}
+
+label {
+  display: block;
+  margin-top: 20px;
+}
+
+label, input {
+  font-family: var(--site-font)
+}
