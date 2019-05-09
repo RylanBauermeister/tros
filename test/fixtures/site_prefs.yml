@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  access_time: 1
+  swap_time: 1
+  compare_time: 1
+  array_size: 1
+
+two:
+  access_time: 1
+  swap_time: 1
+  compare_time: 1
+  array_size: 1

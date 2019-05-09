@@ -25,6 +25,16 @@
         <input type="submit" value="Update">
         </div>
       </form>
+
+      <form id="array-sizing">
+        <div class="form-item">
+          <%=label_tag "Array Sizes"%>
+          <%=text_field_tag "array_size", "50"%>
+        </div>
+        <div class="form-item">
+          <input type="submit" value="Update">
+        </div>
+      </form>
     </div>
 
     <div class="graph-container">
@@ -72,5 +82,9 @@
     <div class="controls">
       <button type="button" id="shuffleButton">Shuffle</button>
       <button type="button" id="sortButton">Sort</button>
+      <button type="button" id="saveButton">Save</button>
+    </div>
+
+    <div id="sort-records" class="sort-records-container">
     </div>
   </body>

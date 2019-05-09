@@ -4,6 +4,7 @@ class Sort{
     this.access = settings.access
     this.swap = settings.swap
     this.compare = settings.compare
+    this.totalMs = 0;
 
     this.resetCounts()
   }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_08_164010) do
+ActiveRecord::Schema.define(version: 2019_05_08_235425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,19 @@ ActiveRecord::Schema.define(version: 2019_05_08_164010) do
     t.integer "swaps"
     t.integer "compares"
     t.integer "total_ms"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "array_size"
+    t.integer "access_time"
+    t.integer "swap_time"
+    t.integer "compare_time"
+  end
+
+  create_table "site_prefs", force: :cascade do |t|
+    t.integer "access_time"
+    t.integer "swap_time"
+    t.integer "compare_time"
+    t.integer "array_size"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

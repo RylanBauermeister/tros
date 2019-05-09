@@ -4,10 +4,12 @@ class Graph {
     this.container = container
     this.items = items
     this.calculateWidth();
-    this.maxItem = Math.max(...items)
     this.renderColumns()
   }
 
+  get maxItem() {
+    return Math.max(...this.items)
+  }
 
   calculateColumnHeight(value){
     return this.container.clientHeight * (value / this.maxItem) -2
@@ -20,7 +22,7 @@ class Graph {
   }
 
   calculateWidth(){
-    this.columnWidth = this.container.clientWidth / (this.items.length) - 2.03 + 'px'
+    this.columnWidth = Math.floor(this.container.clientWidth / (this.items.length) - 2) + 'px'
   }
 
   shuffle() {
