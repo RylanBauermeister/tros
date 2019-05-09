@@ -1,13 +1,23 @@
   <body>
-    <h1 class="main-banner">t.roS</h1>
-    <div class="stats-holder">
-      <h2 class="stats-banner">Access Time: <span id=access></span>ms</h2>
-      <h2 class="stats-banner">Compare Time: <span id=compare></span>ms</h2>
-      <h2 class="stats-banner">Swap Time: <span id=swap></span>ms</h2>
+    <h1 class="main-banner">
+      <span>t</span>
+      <span>.</span>
+      <span>r</span>
+      <span>o</span>
+      <span>S</span>
+    </h1>
+
+    <div class="centered">
+      <div class="stats-holder">
+        <h2 class="stats-banner">Access Time: <span id=access></span>ms</h2>
+        <h2 class="stats-banner">Compare Time: <span id=compare></span>ms</h2>
+        <h2 class="stats-banner">Swap Time: <span id=swap></span>ms</h2>
+      </div>
     </div>
 
     <div id="side-menu" class="side-menu">
       <div id="open-bubble" class="open-bubble">>></div>
+      <h2 class="prefs-banner">Site Preferences</h2>
       <form id="weighting">
         <div class="form-item">
           <%=label_tag "Access"%>
@@ -37,52 +47,57 @@
       </form>
     </div>
 
-    <div class="graph-container">
-      <div class="graph graph-left" id="graph1">
+    <div class="all-graphs-container">
+      <div class="graph-container">
+        <div class="graph graph-left" id="graph1">
 
+        </div>
+        <select id="sort-type-1" class="sort-dropdown">
+          <option value="insertion">Insertion Sort</option>
+          <option value="selection">Selection Sort</option>
+          <option value="bubble">Bubble Sort</option>
+          <option value="merge">Merge Sort</option>
+          <option value="quick">Quick Sort</option>
+        </select>
+
+        <div class="data">
+          <ul class="stats">
+            <li class="accesses">Accesses: <span class="num-access"></span></li>
+            <li class="swaps">Swaps: <span class="num-swap"></span></li>
+            <li class="compares">Compares: <span class="num-compare"></span></li>
+          </ul>
+          <span class='timing-span'>Total Time: <span id="time-span-1"></span></span>
+        </div>
       </div>
-      <select id="sort-type-1" class="sort-dropdown">
-        <option value="insertion">Insertion Sort</option>
-        <option value="selection">Selection Sort</option>
-        <option value="bubble">Bubble Sort</option>
-        <option value="merge">Merge Sort</option>
-      </select>
 
-      <div class="data">
-        <ul class="stats">
-          <li class="accesses">Accesses: <span class="num-access"></span></li>
-          <li class="swaps">Swaps: <span class="num-swap"></span></li>
-          <li class="compares">Compares: <span class="num-compare"></span></li>
-        </ul>
-        <span class='timing-span'>Total Time: <span id="time-span-2"></span></span>
+      <div class="graph-container">
+
+        <div class="graph graph-right" id="graph2">
+
+        </div>
+        <select id="sort-type-2" class="sort-dropdown">
+          <option value="insertion">Insertion Sort</option>
+          <option value="selection">Selection Sort</option>
+          <option value="bubble">Bubble Sort</option>
+          <option value="merge">Merge Sort</option>
+          <option value="quick">Quick Sort</option>
+        </select>
+
+        <div class="data">
+          <ul class="stats">
+            <li class="accesses">Accesses: <span class="num-access"></span></li>
+            <li class="swaps">Swaps: <span class="num-swap"></span></li>
+            <li class="compares">Compares: <span class="num-compare"></span></li>
+          </ul>
+          <span class='timing-span'>Total Time: <span id="time-span-2"></span></span>
+        </div>
       </div>
     </div>
 
-    <div class="graph-container">
-
-      <div class="graph graph-right" id="graph2">
-
-      </div>
-      <select id="sort-type-2" class="sort-dropdown">
-        <option value="insertion">Insertion Sort</option>
-        <option value="selection">Selection Sort</option>
-        <option value="bubble">Bubble Sort</option>
-        <option value="merge">Merge Sort</option>
-      </select>
-
-      <div class="data">
-        <ul class="stats">
-          <li class="accesses">Accesses: <span class="num-access"></span></li>
-          <li class="swaps">Swaps: <span class="num-swap"></span></li>
-          <li class="compares">Compares: <span class="num-compare"></span></li>
-        </ul>
-        <span class='timing-span'>Total Time: <span id="time-span-1"></span></span>
-      </div>
-    </div>
     <div class="controls">
       <button type="button" id="shuffleButton">Shuffle</button>
       <button type="button" id="sortButton">Sort</button>
-      <button type="button" id="saveButton">Save</button>
+      <button type="button" id="saveButton" disabled>Save</button>
     </div>
 
     <div id="sort-records" class="sort-records-container">

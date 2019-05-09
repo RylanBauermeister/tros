@@ -4,10 +4,11 @@ const SORTS = {
   'insertion': "Insertion Sort",
   'selection': "Selection Sort",
   'merge': "Merge Sort",
-  'bubble': "Bubble Sort"
+  'bubble': "Bubble Sort",
+  'quick': "Quick Sort"
 }
 
-let ARRAY_SIZE = 50;
+let ARRAY_SIZE;
 
 function changeArraySize (num, ...graphs) {
     ARRAY_SIZE = num;
@@ -48,7 +49,6 @@ function updateTimings(access, compare, swap){
 
 function saveSorts(...sorts){
   sorts.forEach(sort => {
-    console.log(sort)
     fetch(RECORDS_URL, {
       method: "POST",
       headers: {
@@ -83,7 +83,7 @@ function populateRecords(){
 function addRecords(records){
   let recordsContainer = document.getElementById('sort-records')
   records.forEach(record => {
-    recordsContainer.appendChild(addRecord(record))
+    recordsContainer.prepend(addRecord(record))
   })
 }
 
@@ -138,7 +138,7 @@ function deleteRecord(id){
 
 function appendNewRecord(record){
   let recordsContainer = document.getElementById('sort-records')
-  recordsContainer.appendChild(addRecord(record))
+  recordsContainer.prepend(addRecord(record))
 }
 
 function appendChildren(elem, ...args){
@@ -151,22 +151,85 @@ function getSitePreferences(){
   .then(setupSite)
 }
 
+function makeGraphs(numGraphs, preferences){
+  ARRAY_SIZE = preferences.array_size
+  let results = [];
+  let data = randomArray(preferences.array_size)
+  for(let i = 0; i < numGraphs; i++){
+    let graphContainer = document.getElementById(`graph${i+1}`)
+    results.push(new Graph(graphContainer, data.slice(0)))
+  }
+  return results;
+}
+
+function makeSorts(preferences, ...graphs){
+  const results = []
+  for (let i = 0; i < graphs.length; i++){
+    let newSort = new Sort({
+      graph: graphs[i],
+      access: preferences.access_time,
+      swap: preferences.swap_time,
+      compare: preferences.compare_time
+    })
+    newSort.resetCounts();
+    results.push(newSort)
+  }
+  return results;
+}
+
+function attachEventListeners() {
+  let sideMenu = document.getElementById('side-menu')
+  let openBubble = document.getElementById('open-bubble');
+
+  openBubble.addEventListener('click', ev => {
+    if(sideMenu.classList.contains("open")){
+      sideMenu.classList.remove("open")
+      ev.target.textContent = ">>"
+    } else {
+      sideMenu.classList.add("open")
+      ev.target.textContent = "<<"
+    }
+  })
+
+  window.addEventListener('keydown', ev => {
+    if (ev.keyCode === 27){
+      if(sideMenu.classList.contains("open")){
+        sideMenu.classList.remove("open")
+        openBubble.textContent = ">>"
+      }
+    }
+  })
+}
+
+function addEasterEgg(){
+  let header = document.getElementsByTagName('h1')[0]
+  let titleLetters = header.children;
+  header.addEventListener('click', () => {
+    if (!header.classList.contains("unscrambled")){
+      titleLetters[4].style.transform = 'translateX(-3em)'
+      titleLetters[3].style.transform = 'translateX(-1.5em)'
+      titleLetters[1].style.transform = 'translateX(2.25em)'
+      titleLetters[0].style.transform = 'translateX(2.25em)'
+      header.classList.add('unscrambled')
+    } else {
+      titleLetters[4].style.transform = 'translateX(0)'
+      titleLetters[3].style.transform = 'translateX(0)'
+      titleLetters[1].style.transform = 'translateX(0)'
+      titleLetters[0].style.transform = 'translateX(0)'
+      header.classList.remove('unscrambled')
+    }
+
+  })
+
+}
+
 function setupSite(preferences){
   preferences = preferences[0]
-  let access = preferences.access_time
-  let swap = preferences.swap_time
-  let compare = preferences.compare_time
-  let arraySize = preferences.array_size
-
-  let graphContainer1 = document.getElementById('graph1')
-  let graphContainer2 = document.getElementById('graph2')
-
   let graphOneSort = document.getElementById('sort-type-1')
   let graphTwoSort = document.getElementById('sort-type-2')
 
-  let data = randomArray(arraySize)
-  let graph1 = new Graph(graphContainer1, data.slice(0))
-  let graph2 = new Graph(graphContainer2, data.slice(0))
+  let [graph1, graph2] = makeGraphs(2, preferences);
+  let [sort1, sort2] = makeSorts(preferences, graph1, graph2)
 
   let shuffleButton = document.getElementById('shuffleButton')
   let sortButton = document.getElementById('sortButton')
@@ -175,34 +238,48 @@ function setupSite(preferences){
   let graphSizing = document.getElementById('array-sizing')
   let weighting = document.getElementById('weighting')
 
-  updateTimings(access,compare,swap)
+  weighting.elements['Access'].value = preferences.access_time;
+  weighting.elements['Swap'].value = preferences.swap_time;
+  weighting.elements['Compare'].value = preferences.compare_time;
+  graphSizing.elements['array_size'].value = preferences.array_size
 
-  let sort1 = new Sort({
-    graph: graph1,
-    access: access,
-    swap: swap,
-    compare: compare
-  })
-  let sort2 = new Sort({
-    graph: graph2,
-    access: access,
-    swap: swap,
-    compare: compare
-  })
-
-  sort1.resetCounts();
-  sort2.resetCounts();
+  updateTimings(preferences.access_time, preferences.compare_time, preferences.swap_time)
 
   shuffleButton.addEventListener('click', () => {
+    saveButton.setAttribute('disabled', 'disabled')
     graph2.items = graph1.shuffle();
     graph2.renderColumns();
   })
 
   sortButton.addEventListener('click', () => {
+    saveButton.setAttribute('disabled', 'disabled')
+    let done = 0;
     sort1.resetCounts();
     sort2.resetCounts();
-    sort1[graphOneSort.value + "Sort"]();
-    sort2[graphTwoSort.value + "Sort"]();
+    sort1[graphOneSort.value + "Sort"]()
+    .then(() => {
+      let sorter = sort1
+      let time = sorter.access * sorter.counts.access +
+                 sorter.swap * sorter.counts.swap +
+                 sorter.compare * sorter.counts.compare;
+      sorter.totalMs = time;
+      document.getElementById('time-span-1').textContent = time + "ms"
+      if (++done === 2){
+        saveButton.removeAttribute('disabled')
+      }
+    });
+    sort2[graphTwoSort.value + "Sort"]()
+    .then(() => {
+      let sorter = sort2
+      let time = sorter.access * sorter.counts.access +
+                 sorter.swap * sorter.counts.swap +
+                 sorter.compare * sorter.counts.compare;
+      sorter.totalMs = time;
+      document.getElementById('time-span-2').textContent = time + "ms"
+      if (++done === 2){
+        saveButton.removeAttribute('disabled')
+      }
+    });
   })
 
   saveButton.addEventListener('click', ev => {
@@ -218,6 +295,7 @@ function setupSite(preferences){
 
   graphSizing.addEventListener('submit', ev => {
     ev.preventDefault();
+    saveButton.setAttribute('disabled', 'disabled')
     let newSize = parseInt(ev.target.elements['array_size'].value)
 
     changeArraySize(newSize, graph1, graph2);
@@ -227,6 +305,7 @@ function setupSite(preferences){
 
   weighting.addEventListener('submit', ev => {
     ev.preventDefault();
+    saveButton.setAttribute('disabled', 'disabled')
     let access = parseInt(ev.target.elements['Access'].value)
     let compare = parseInt(ev.target.elements['Compare'].value)
     let swap = parseInt(ev.target.elements['Swap'].value)
@@ -251,29 +330,8 @@ function setupSite(preferences){
 function main(){
   populateRecords();
   getSitePreferences();
-
-  let sideMenu = document.getElementById('side-menu')
-  let openBubble = document.getElementById('open-bubble');
-
-  openBubble.addEventListener('click', ev => {
-    if(sideMenu.classList.contains("open")){
-      sideMenu.classList.remove("open")
-      ev.target.textContent = ">>"
-    } else {
-      sideMenu.classList.add("open")
-      ev.target.textContent = "<<"
-    }
-  })
-
-  window.addEventListener('keydown', ev => {
-    if (ev.keyCode === 27){
-      if(sideMenu.classList.contains("open")){
-        sideMenu.classList.remove("open")
-        openBubble.textContent = ">>"
-      }
-    }
-  })
-
+  attachEventListeners();
+  addEasterEgg();
 }
 
 document.addEventListener('DOMContentLoaded', main)
