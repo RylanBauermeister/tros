@@ -1,5 +1,5 @@
-const RECORDS_URL = 'postgres://cgwecytjsxdhni:0df2eef90033e851c30328044bc64ab452fd0b368167c00d7f5e1f420d9c12eb@ec2-174-129-240-67.compute-1.amazonaws.com:5432/dbjmltr86c4kr0/api/v1/records/'
-const PREFS_URL = 'postgres://cgwecytjsxdhni:0df2eef90033e851c30328044bc64ab452fd0b368167c00d7f5e1f420d9c12eb@ec2-174-129-240-67.compute-1.amazonaws.com:5432/dbjmltr86c4kr0/api/v1/site_prefs/'
+const RECORDS_URL = 'http://localhost:3000/api/v1/records/'
+const PREFS_URL = 'http://localhost:3000/api/v1/site_prefs/'
 const SORTS = {
   'insertion': "Insertion Sort",
   'selection': "Selection Sort",
