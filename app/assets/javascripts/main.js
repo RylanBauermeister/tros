@@ -1,5 +1,5 @@
-const RECORDS_URL = 'http://localhost:3000/api/v1/records/'
-const PREFS_URL = 'http://localhost:3000/api/v1/site_prefs/'
+const RECORDS_URL = 'https://tros.herokuapp.com/api/v1/records/'
+const PREFS_URL = 'https://tros.herokuapp.com/api/v1/site_prefs/'
 const SORTS = {
   'insertion': "Insertion Sort",
   'selection': "Selection Sort",
